@@ -2,21 +2,23 @@
 
 > Agent-native Engineering Delivery System
 
-Daedalus 将目标、工程知识、人、Agent、工具与计算资源组织起来，交付经过验证、可以使用和维护的软件能力。
+Daedalus 是一套能够持续交付优秀项目的完整工程系统：将值得解决的问题转化为经过验证、可以交付、能够维护的产品能力；尽可能减少等待、重复劳动和人工协调，同时持续提高产品与工程质量。
 
-系统以完整能力增量（Capability Increment）组织工作，在明确范围内自主执行、修复和恢复，并用可追溯证据支持集中验收。它负责工程交付协调；仓库现有 Git/GitHub Workflow 负责变更验证、审查、集成与发布。
+系统连接探索、交付和改进三个循环，以完整能力增量（Capability Increment）组织工作，实行批内自主修复和集中验收。人、模型、确定性工具、平台与计算资源按实际效果分工；Codex、GitHub、CI 和云平台都是可选择、可替换的组成部分。
+
+自研的 Engineering Control Plane 承担必要的协调语义，现有仓库工作流承接变更验证、审查、集成与发布。实现范围可以逐步投入；目标架构覆盖从问题发现到运行反馈的完整系统。
 
 ## 当前状态
 
-Architecture v0，设计草案。当前交付物是产品范围、领域关系、控制边界和验收场景，尚未实现执行器、CLI、持久化或 GitHub 集成。文档描述的目标能力不代表已经运行或验收通过。
+Architecture v0，设计草案。先审查完整目标架构，再按可验收的能力增量建设；尚未实现执行器、CLI、持久化或 GitHub 集成。文档、PR 和格式检查不代表架构已经接受或目标能力已经运行。
 
 ## 阅读入口
 
 | 文档 | 内容 |
 | --- | --- |
 | [产品目标与首个能力增量](docs/product.md) | 优化目标、项目边界、建设顺序与首个纵向切片 |
-| [Architecture v0](docs/architecture.md) | Capability、Task、Execution、Evidence / Acceptance 的语义与关系 |
-| [工程约定](docs/engineering.md) | 文档权威、项目开发与验证、外部 Workflow 基线及适配 |
+| [Architecture v0](docs/architecture.md) | 三循环目标架构、资源与控制模型、验证、发布运行、反馈与核心领域语义 |
+| [工程约定](docs/engineering.md) | 核心指南映射、G0 / G1 / G2 设计审查、项目验证与外部 Workflow 适配 |
 | [架构决策入口](docs/adr/README.md) | 何时记录 ADR、怎样说明取舍与变更状态 |
 | [Agent 工作入口](AGENTS.md) | 本仓库的上下文与交付约定 |
 
@@ -36,13 +38,14 @@ git diff --cached --check
 
 ## 第一条纵向能力
 
-接入一个已有交付工作流的仓库，从 Capability 和 Task 出发，解析上下文与策略，在隔离工作区中执行任务、调用仓库验证入口，形成 PR；观察现有工作流完成集成后，针对实际集成版本和所需制品进行能力级验收。
+接入一个已有交付工作流的真实项目，从问题、Capability 和 Task 出发，解析上下文与策略，执行并验证变更；通过现有工作流集成、形成可用制品，完成能力验收，并把实际使用反馈转化为后续判断。首个执行器与环境在切片绑定时核验。
 
-其中，形成可审查 PR 与结构化证据是中间检查点；完整切片的完成条件包含能力级验收。合并和发布由已有仓库工作流及有效授权控制。
+可审查 PR 是中间检查点。首个切片是完整目标架构的最小实例，不能反过来限制产品范围；自动合并、常驻调度或统一平台不是它的前提。
 
 ## 设计来源
 
-- 项目发起阶段的设计讨论：项目目标、命名、Daedalus Engineering Control Plane 与 Repository Delivery Plane 的边界，以及能力级验收要求。讨论中的有效设计已整理进本仓库，无需访问私人会话。
+- 核心指南：项目发起者于 2026-09-26 提供的完整工程系统总体方案。目标、四维质量、三循环、自治方式和阶段建设原则以 [产品契约](docs/product.md) 为入口，逐项落点见 [工程约定](docs/engineering.md)；无需访问私人会话。
+- 架构审阅意见：围绕 Identity、Lifecycle、Authority、Failure、Evidence 和 Recovery 检验模型；评审结论与待决事项记录在对应 PR / 任务中。
 - 《Git & GitHub Engineering Workflow Best Practices》v1.0：外部仓库交付基线；版本、摘要和适用边界见 [工程约定](docs/engineering.md)。
 
 本地文档应足以解释本项目设计；原始会话中的建议不自动成为已验证的平台能力或执行授权。
