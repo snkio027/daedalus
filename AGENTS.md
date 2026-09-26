@@ -7,7 +7,7 @@
 - 修改领域模型、状态、证据或验收逻辑前，读 [docs/architecture.md](docs/architecture.md)。
 - 开发、验证或涉及 GitHub 交付前，读 [docs/engineering.md](docs/engineering.md)。
 - 重要架构取舍按 [docs/adr/README.md](docs/adr/README.md) 记录。
-- 当前文档是 Architecture v0 草案；设计、已实现能力和实际运行事实应分别报告。
+- 当前文档是已接受的 Architecture v0 Design Baseline；G0/G1 已完成，G2 未启动。设计、已实现能力和实际运行事实应分别报告。
 
 ## 实施约定
 
