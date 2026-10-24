@@ -46,6 +46,6 @@ git diff --cached --check
 
 - 核心指南：项目发起者于 2026-09-26 提供的完整工程系统总体方案。目标、四维质量、三循环、自治方式和阶段建设原则以 [产品契约](docs/product.md) 为入口，逐项落点见 [工程约定](docs/engineering.md)；无需访问私人会话。
 - 架构审阅意见：围绕 Identity、Lifecycle、Authority、Failure、Evidence 和 Recovery 检验模型；评审结论与待决事项记录在对应 PR / 任务中。
-- 《Git & GitHub Engineering Workflow Best Practices》v1.0：外部仓库交付基线；版本、摘要和适用边界见 [工程约定](docs/engineering.md)。
+- 《Git & GitHub Engineering Workflow Best Practices》v1.1：2026-10-24 经维护者批准替代 v1.0 的外部仓库交付规范基线；版本、摘要和适用边界见 [工程约定](docs/engineering.md)。规范采用不代表线上实施或运行验收完成。
 
 本地文档应足以解释本项目设计；原始会话中的建议不自动成为已验证的平台能力或执行授权。
