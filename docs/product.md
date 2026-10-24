@@ -1,6 +1,6 @@
 # 产品契约与能力建设
 
-状态：Architecture v0 产品契约草案，2026-09-26。依据项目发起者的完整工程系统核心指南；本文保存稳定产品意图，设计评审与实际进度记录在 PR / 任务中。
+状态：Architecture v0 Product Contract Baseline；接受日期：2026-09-26（[维护者接受决定](https://github.com/snkio027/daedalus/pull/1#issuecomment-5846965755)）。依据项目发起者的完整工程系统核心指南；本文保存稳定产品意图，设计评审与实际进度记录在 PR / 任务中。
 
 ## 使命与设计依据
 

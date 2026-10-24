@@ -1,6 +1,6 @@
 # Daedalus 工程约定
 
-状态：Documentation Baseline v0 草案，2026-09-26。本文说明 Daedalus 自身的文档、开发与验证方式，并记录外部仓库交付基线的采用关系。规范要求与平台实际配置分别核对。
+状态：Documentation Baseline v0，2026-09-26；Architecture G0/G1 已完成，G2 未启动（[维护者接受决定](https://github.com/snkio027/daedalus/pull/1#issuecomment-5846965755)）。本文说明 Daedalus 自身的文档、开发与验证方式，并记录外部仓库交付基线的采用关系。规范要求与平台实际配置分别核对。
 
 ## 核心指南与对齐范围
 

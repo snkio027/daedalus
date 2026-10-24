@@ -10,7 +10,7 @@ Daedalus 是一套能够持续交付优秀项目的完整工程系统：将值�
 
 ## 当前状态
 
-Architecture v0，设计草案。先审查完整目标架构，再按可验收的能力增量建设；尚未实现执行器、CLI、持久化或 GitHub 集成。文档、PR 和格式检查不代表架构已经接受或目标能力已经运行。
+Architecture v0 Design Baseline 已于 2026-09-26 经[维护者决定接受](https://github.com/snkio027/daedalus/pull/1#issuecomment-5846965755)。G0/G1 PASS；G2 未启动。尚未实现执行器、CLI、持久化或 GitHub 集成，也没有实现验证、可执行失败测试或生产就绪结论。
 
 ## 阅读入口
 

@@ -1,6 +1,6 @@
 # Daedalus Architecture v0
 
-状态：Architecture v0 Design Draft，2026-09-26。范围：完整工程系统的目标架构，以及支撑它的领域与控制语义。本文按核心指南覆盖探索、交付、运行和改进；实现按能力增量投入，不预选 CLI、数据库、消息系统或 Web UI。
+状态：Architecture v0 Design Baseline；接受日期：2026-09-26（[维护者接受决定](https://github.com/snkio027/daedalus/pull/1#issuecomment-5846965755)）。范围：完整工程系统的目标架构，以及支撑它的领域与控制语义。本文按核心指南覆盖探索、交付、运行和改进；实现按能力增量投入，不预选 CLI、数据库、消息系统或 Web UI。
 
 产品目标见 [product.md](product.md)，外部交付契约及项目工程约定见 [engineering.md](engineering.md)。下述生命周期是实现设计的起点，详细接口和状态转换测试在首个可执行切片中落实。
 
