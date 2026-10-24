@@ -18,7 +18,8 @@ Architecture v0，设计草案。先审查完整目标架构，再按可验收�
 | --- | --- |
 | [产品目标与首个能力增量](docs/product.md) | 优化目标、项目边界、建设顺序与首个纵向切片 |
 | [Architecture v0](docs/architecture.md) | 三循环目标架构、资源与控制模型、验证、发布运行、反馈与核心领域语义 |
-| [工程约定](docs/engineering.md) | 核心指南映射、G0 / G1 / G2 设计审查、项目验证与外部 Workflow 适配 |
+| [工程约定](docs/engineering.md) | 核心指南映射、G0 / G1 / G2 设计审查、项目验证与共享规范采用 |
+| [共享工程规范](docs/standards/README.md) | 集中维护的公共开发规范、固定版本与消费仓库采用边界 |
 | [架构决策入口](docs/adr/README.md) | 何时记录 ADR、怎样说明取舍与变更状态 |
 | [Agent 工作入口](AGENTS.md) | 本仓库的上下文与交付约定 |
 
@@ -46,6 +47,6 @@ git diff --cached --check
 
 - 核心指南：项目发起者于 2026-09-26 提供的完整工程系统总体方案。目标、四维质量、三循环、自治方式和阶段建设原则以 [产品契约](docs/product.md) 为入口，逐项落点见 [工程约定](docs/engineering.md)；无需访问私人会话。
 - 架构审阅意见：围绕 Identity、Lifecycle、Authority、Failure、Evidence 和 Recovery 检验模型；评审结论与待决事项记录在对应 PR / 任务中。
-- 《Git & GitHub Engineering Workflow Best Practices》v1.1：2026-10-24 经维护者批准替代 v1.0 的外部仓库交付规范基线；版本、摘要和适用边界见 [工程约定](docs/engineering.md)。规范采用不代表线上实施或运行验收完成。
+- [《Git & GitHub Engineering Workflow Best Practices》v1.1](docs/standards/git-github-workflow/v1.1.md)：2026-10-24 经维护者批准替代 v1.0，正文在本仓库集中维护；版本、摘要和适用边界见 [工程约定](docs/engineering.md)。规范采用不代表线上实施或运行验收完成。
 
 本地文档应足以解释本项目设计；原始会话中的建议不自动成为已验证的平台能力或执行授权。
