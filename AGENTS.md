@@ -2,6 +2,8 @@
 
 ## 上下文
 
+本入口中的 Architecture v0 接受状态仅适用于产品契约与架构；[共享工程规范](docs/standards/README.md) 按各自采用状态使用，Proposed 内容不因此成为已接受契约。
+
 - 先读 [README.md](README.md) 和 [docs/product.md](docs/product.md)，确定当前目标与交付范围。
 - 以完整工程系统核心指南为设计依据：覆盖探索、交付、改进三循环及四维质量；首个切片与控制子系统不能替代总体目标。
 - 修改领域模型、状态、证据或验收逻辑前，读 [docs/architecture.md](docs/architecture.md)。
