@@ -154,6 +154,8 @@ v1.1 §25 的接口分为 Fast、Plan、Affected、Full 与 Extended；`quality:
 
 [云原生软件供应链安全工程指南](standards/software-supply-chain-security/2026-edition-draft.md) 是 2026-10-25 整理的 Proposed 专题，补充制品来源、构建证据、签名身份和部署准入；不属于 Architecture v0 或 Git/GitHub v1.1 的既有接受决定。消费项目可按实际交付对象评审并固定采用范围；本次收录不改变验证入口、集成路径、保证等级、发布权限或能力验收要求，也不启动 G2、修改 CI / Ruleset 或部署安全控制。
 
+[AI-Native 数据建模与平台组织架构](standards/ai-native-data-modeling/v1.0-draft.md) 为 `v1.0-draft` r2、Proposed，原文来源与摘要、整合范围见其 §0 和[共享规范索引](standards/README.md)。它为数据类消费项目补充逻辑发布、物理布局与消费计划契约，数据平台仍拥有自己的状态与验证入口；TransformRun、发布状态及 DM-G01–DM-G12 通过显式引用与 Daedalus 对象和验收关联，不替代 Attempt、Capability Acceptance 或 G0 / G1 / G2。该专题与 Agent 工作流、供应链指南分别保持 Proposed；采用范围和实现验证由消费项目另行决定，本次收录不扩展既有试点或线上配置授权。
+
 共享规范已有仓库内分发路径；实施时仍须绑定固定提交并验证消费环境可取得内容，确定首个消费项目、可信 CI 来源和能力验收入口。质量入口、CODEOWNERS、Ruleset 与实际权限配置要通过仓库检查取得事实；设计文档和公开同步都不能代替这些证据。
 
 原规范中的全局 Git 配置、清理、推送、合并及发布命令均为参考内容，不能仅因本文引用该文档而自动执行。

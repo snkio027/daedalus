@@ -21,6 +21,7 @@ Architecture v0 Design Baseline 已于 2026-09-26 经[维护者决定接受](htt
 | [工程约定](docs/engineering.md) | 设计审查、项目验证与共享规范采用；含待评审的 [Agent 工程工作流](docs/engineering.md#agent-engineering-workflow) |
 | [共享工程规范](docs/standards/README.md) | 集中维护的公共开发规范、固定版本与消费仓库采用边界 |
 | [供应链安全指南](docs/standards/software-supply-chain-security/2026-edition-draft.md) | Proposed 专题：构建、制品、证据、身份与部署准入；尚未采用或运行验收 |
+| [AI-Native 数据建模与平台组织架构](docs/standards/ai-native-data-modeling/v1.0-draft.md) | Proposed 专题：数据身份、逻辑发布、交付布局、消费计划与治理；含来源及现有契约适配 |
 | [架构决策入口](docs/adr/README.md) | 何时记录 ADR、怎样说明取舍与变更状态 |
 | [Agent 工作入口](AGENTS.md) | 本仓库的上下文与交付约定 |
 
