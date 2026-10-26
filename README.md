@@ -10,16 +10,26 @@ Daedalus 是一套能够持续交付优秀项目的完整工程系统：将值�
 
 ## 当前状态
 
-Architecture v0 Design Baseline 已于 2026-09-26 经[维护者决定接受](https://github.com/snkio027/daedalus/pull/1#issuecomment-5846965755)。G0/G1 PASS；G2 未启动。尚未实现执行器、CLI、持久化或 GitHub 集成，也没有实现验证、可执行失败测试或生产就绪结论。
+Architecture v0 Design Baseline 已于 2026-09-26 经[维护者决定接受](https://github.com/snkio027/daedalus/pull/1#issuecomment-5846965755)。G0/G1 PASS；G2 未启动。尚未实现执行器、CLI、持久化或 GitHub 集成，也没有控制面实现验证、运行恢复测试或生产就绪结论。本仓库提供文档及本地文档维护检查；检查器测试不构成系统实现或 G2 验收。
 
 ## 阅读入口
+
+| 使用目的 | 阅读路径 |
+| --- | --- |
+| 在我的项目采用共享内容 | [内容目录](docs/standards/README.md#选择内容) → [采用方式](docs/standards/README.md#消费项目怎样采用) → 消费项目自己的入口与工程配置 |
+| 参与开发 Daedalus | [产品契约](docs/product.md) → [架构问题导航](docs/architecture.md#按问题阅读) → [本仓库工程约定](docs/engineering.md) |
+
+消费项目选择固定版本并自行决定采用；目前没有 Daedalus 产品安装或运行入口。准备中的消费者与任务见下列 G2 方案，方案本身不放行执行。
 
 | 文档 | 内容 |
 | --- | --- |
 | [产品目标与首个能力增量](docs/product.md) | 优化目标、项目边界、建设顺序与首个纵向切片 |
 | [Architecture v0](docs/architecture.md) | 三循环目标架构、资源与控制模型、验证、发布运行、反馈与核心领域语义 |
-| [工程约定](docs/engineering.md) | 设计审查、项目验证与共享规范采用；含待评审的 [Agent 工程工作流](docs/engineering.md#agent-engineering-workflow) |
+| [工程约定](docs/engineering.md) | Daedalus 自身的设计审查、本地验证与规范采用关系 |
+| [Agent 工程工作流](docs/agent-workflow.md) | Proposed：跨 Agent 的任务、执行、交接与恢复方法 |
+| [消费项目接入与 G2 准备方案](docs/plans/consumer-adoption-g2.md) | Proposed：消费入口、真实候选任务、G2 绑定与工具适配评估；不代表实现放行 |
 | [共享工程规范](docs/standards/README.md) | 集中维护的公共开发规范、固定版本与消费仓库采用边界 |
+| [需求、设计与验证衔接方法](docs/standards/requirements-design-verification/v0.1-draft.md) | Proposed：复用固定知识源，连接能力定义、方案取舍与有效检查；待真实任务校准 |
 | [供应链安全指南](docs/standards/software-supply-chain-security/2026-edition-draft.md) | Proposed 专题：构建、制品、证据、身份与部署准入；尚未采用或运行验收 |
 | [AI-Native 数据建模与平台组织架构](docs/standards/ai-native-data-modeling/v1.0-draft.md) | Proposed 专题：数据身份、逻辑发布、交付布局、消费计划与治理；含来源及现有契约适配 |
 | [架构决策入口](docs/adr/README.md) | 何时记录 ADR、怎样说明取舍与变更状态 |
@@ -33,11 +43,12 @@ Architecture v0 Design Baseline 已于 2026-09-26 经[维护者决定接受](htt
 
 ```bash
 git status --short --branch
+./scripts/check-docs
 git diff --check
 git diff --cached --check
 ```
 
-这些 Git 检查不覆盖未跟踪文件，也不验证链接或架构语义；完整的文档检查范围见工程约定。
+文档检查入口需要 Python 3.10+ 和 Git，覆盖未忽略的未跟踪 Markdown；Git 空白检查作为补充。检查器本身变更时还需运行失败场景测试，范围与命令见[工程约定](docs/engineering.md#文档阶段的验证)。本地检查不验证架构语义或线上门禁。
 
 ## 第一条纵向能力
 
