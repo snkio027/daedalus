@@ -77,6 +77,24 @@ class DocumentationChecks(unittest.TestCase):
         self.put('new.md', '# New\n\n[use][label]\n\n[label]: missing.md\n')
         self.assert_bad('missing or uninspected target')
 
+    def test_diagnostic_lines_after_reference_definitions(self):
+        cases = (
+            ('# New\n\n[ref]: docs/engineering.md\n\n\n[Missing](absent.md)\n',
+             'new.md:6: missing or uninspected target: absent.md'),
+            ('# New\n\n[ref]:\n  docs/engineering.md\n\n'
+             '[Missing](docs/engineering.md#absent)\n',
+             'new.md:6: missing Markdown anchor: docs/engineering.md#absent'),
+            ('# New\n\n[one]: docs/engineering.md\n\n'
+             '[two]: docs/agent-workflow.md\n\n\n[Missing](absent.md)\n',
+             'new.md:8: missing or uninspected target: absent.md'),
+        )
+        for text, diagnostic in cases:
+            with self.subTest(diagnostic=diagnostic, text=text):
+                self.put('new.md', text)
+                result = self.check()
+                self.assertEqual(result.returncode, 1, result.stdout + result.stderr)
+                self.assertEqual(json.loads(result.stdout)['errors'], [diagnostic])
+
     def test_plain_bracketed_citations_are_not_links(self):
         self.put('new.md', '# New\n\nReference [R02][R03].\n\n**[R02] Source**\n')
         self.assert_good()
