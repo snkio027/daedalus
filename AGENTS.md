@@ -1,16 +1,16 @@
-# Daedalus 工作入口
+# Daedalus 本仓库工作入口
 
 ## 上下文
 
-本入口中的 Architecture v0 接受状态仅适用于产品契约与架构；[共享工程规范](docs/standards/README.md) 按各自采用状态使用，Proposed 内容不因此成为已接受契约。
+本入口仅服务 Daedalus 仓库；消费项目应维护自己的入口。本入口中的 Architecture v0 接受状态仅适用于产品契约与架构；[共享工程规范](docs/standards/README.md) 按各自采用状态使用，Proposed 内容不因此成为已接受契约。
 
 - 先读 [README.md](README.md) 和 [docs/product.md](docs/product.md)，确定当前目标与交付范围。
 - 以完整工程系统核心指南为设计依据：覆盖探索、交付、改进三循环及四维质量；首个切片与控制子系统不能替代总体目标。
-- 修改领域模型、状态、证据或验收逻辑前，读 [docs/architecture.md](docs/architecture.md)。
-- 开发、验证或涉及 GitHub 交付前，读 [docs/engineering.md](docs/engineering.md)。
+- 修改产品目标或范围时读 [产品契约](docs/product.md)；修改身份、状态、证据、恢复或验收模型时按[架构导航](docs/architecture.md#按问题阅读)读取相关章节。
+- 普通文档修改先读[文档检查要求](docs/engineering.md#文档阶段的验证)；共享内容修改再读[版本与采用约定](docs/standards/README.md)。涉及 GitHub 交付时核对 [本仓库采用关系](docs/engineering.md#共享规范基线身份) 与当前授权。
 - 重要架构取舍按 [docs/adr/README.md](docs/adr/README.md) 记录。
 - 产品契约与架构是已接受的 Architecture v0 Design Baseline；G0/G1 已完成，G2 未启动。设计、已实现能力和实际运行事实应分别报告。
-- [Agent 工程工作流候选](docs/engineering.md#agent-engineering-workflow) 提供任务契约、上下文路由、执行节奏和接手核对方法，状态为 Proposed，不产生新的执行授权；按当前任务需要读取相关小节。
+- [Agent 工程工作流候选](docs/agent-workflow.md) 提供任务契约、上下文路由、执行节奏和接手核对方法，状态为 Proposed，不产生新的执行授权；按当前任务需要读取相关小节。
 
 ## 实施约定
 
@@ -24,8 +24,8 @@
 
 ## 验证与交付
 
-- 当前仓库只有 Markdown，尚无可运行的 `task quality`、CI 或测试入口；不要声称这些检查已通过。
+- 当前仓库提供文档及 `scripts/check-docs` 本地维护检查，修改检查器时运行 `tests/test_docs.py`；尚无应用 `task quality` 或线上 CI，不要声称这些检查已通过。
 - 按工程约定检查内部链接、模型一致性、来源版本和空白问题；未跟踪文件也必须纳入检查。
 - 架构变更核对核心指南覆盖和 G0 / G1 / G2 的审查要求；格式通过或文档已推送不构成 Gate 通过。
-- 引入首个可执行能力时，同时提供仓库自有的验证入口及相应失败场景检查。
+- 引入首个产品可执行能力时，同时提供仓库自有的验证入口及相应失败场景检查。
 - 报告实际变更、实际运行的检查、未验证项及尚未实现的能力；模型总结不能替代进程或外部系统证据。

@@ -1,0 +1,203 @@
+#!/usr/bin/env python3
+"""Local checks for this repository's Markdown subset; no network or gate decision."""
+
+import argparse
+import hashlib
+import html
+import json
+from pathlib import Path
+import re
+import subprocess
+import sys
+import unicodedata
+from urllib.parse import unquote, urlsplit
+
+
+FROZEN = {
+    'docs/standards/git-github-workflow/v1.0.md':
+        'ae53bb825f902e4814fb88840e1069966913cba9b37cad77c179258b391f773f',
+    'docs/standards/git-github-workflow/v1.1.md':
+        'de77bfd55da3811ed553985db8d61938467a2a3b2c0215e225b607428b667a86',
+}
+FENCE = re.compile(r'^ {0,3}(`{3,}|~{3,})(.*)$')
+INLINE_CODE = re.compile(r'(`+)(?!`)(.*?)(?<!`)\1(?!`)', re.S)
+# Inline destinations allow angle brackets (including spaces), balanced parentheses,
+# and an optional quoted title. These are the forms used in repository navigation.
+DEST = r'(<[^>\n]+>|(?:\\.|[^\s()\\]|\((?:\\.|[^()\\])*\))+)'
+INLINE_LINK = re.compile(r'!?\[(?:\\.|[^\]\\\n])*\]\(\s*' + DEST +
+                         r'(?:\s+["\'][^\n]*?["\'])?\s*\)')
+REF_DEF = re.compile(r'^ {0,3}\[([^\]\n]+)\]:\s*' + DEST +
+                     r'(?:\s+["\'][^\n]*?["\'])?\s*$', re.M)
+
+
+def without_code(text):
+    return INLINE_CODE.sub(lambda m: ''.join('\n' if c == '\n' else ' '
+                                            for c in m[0]), text)
+
+
+def slug(text):
+    text = re.sub(r'!?\[([^\]]+)\]\([^)]*\)', r'\1', text)
+    text = html.unescape(re.sub(r'<[^>]+>', '', text)).lower()
+    return ''.join(c for c in text if c in ' _-' or
+                   unicodedata.category(c)[0] in 'LNM').replace(' ', '-')
+
+
+def inspect(root):
+    errors, documents, anchors, raw_files = [], {}, {}, {}
+    counts = dict(markdown=0, local_links=0, anchor_links=0, fences=0, tables=0,
+                  frozen_digests=0, catalog_digests=0)
+
+    def error(path, line, message):
+        errors.append(f'{path}:{line}: {message}')
+
+    top = subprocess.check_output(['git', '-C', str(root), 'rev-parse',
+                                   '--show-toplevel'], stderr=subprocess.PIPE)
+    if Path(top.decode().strip()).resolve() != root:
+        raise ValueError('--root must be the Git repository root')
+    inventory = subprocess.check_output([
+        'git', '-C', str(root), 'ls-files', '--cached', '--others',
+        '--exclude-standard', '-z'], stderr=subprocess.PIPE).decode().split('\0')
+    names = sorted({name for name in inventory if name.endswith('.md')})
+    for name in names:
+        path = root / name
+        if not path.resolve().is_relative_to(root):
+            error(name, 1, 'document escapes repository')
+            continue
+        try:
+            raw = path.read_bytes()
+            text = raw.decode('utf-8')
+        except (OSError, UnicodeError) as exc:
+            error(name, 1, f'unreadable UTF-8 document: {exc}')
+            continue
+        raw_files[name] = raw
+        counts['markdown'] += 1
+        if not raw.endswith(b'\n') or b'\r' in raw:
+            error(name, 1, 'use LF and a final newline')
+        visible, ids, used = [], set(), set()
+        fence, fence_line, width = None, 0, None
+        for number, line in enumerate(text.splitlines(), 1):
+            if line.rstrip() != line:
+                error(name, number, 'trailing whitespace')
+            match = FENCE.match(line)
+            if fence:
+                if (match and match[1][0] == fence[0] and
+                        len(match[1]) >= len(fence) and not match[2].strip()):
+                    fence = None
+                visible.append('')
+                continue
+            if match:
+                fence, fence_line = match[1], number
+                counts['fences'] += 1
+                width = None
+                visible.append('')
+                continue
+            visible.append(line)
+            heading = re.match(r'^ {0,3}#{1,6}\s+(.+?)(?:\s+#+)?\s*$', line)
+            if heading:
+                base, suffix = slug(heading[1]), 0
+                ident = base
+                while ident in used:
+                    suffix += 1
+                    ident = f'{base}-{suffix}'
+                used.add(ident)
+                ids.add(ident)
+            for explicit in re.findall(r'<(?:a|span)\s+[^>]*(?:id|name)=["\']([^"\']+)', line):
+                ids.add(explicit)
+            if line.startswith('|'):
+                cells = re.split(r'(?<!\\)\|', without_code(line))[1:]
+                if cells and not cells[-1].strip():
+                    cells.pop()
+                if width is None:
+                    width = len(cells)
+                    counts['tables'] += 1
+                elif width != len(cells):
+                    error(name, number, 'inconsistent pipe table columns')
+            else:
+                width = None
+        if fence:
+            error(name, fence_line, 'unclosed code fence')
+        documents[name], anchors[name] = '\n'.join(visible), ids
+
+    def target_for(name, number, destination):
+        dest = re.sub(r'\\([\\()\[\] ])', r'\1', destination.strip('<>'))
+        try:
+            url = urlsplit(dest)
+        except ValueError:
+            error(name, number, f'invalid link: {destination}')
+            return None
+        if url.scheme or url.netloc:
+            return None  # External URLs are deliberately not fetched.
+        counts['local_links'] += 1
+        path = ((root / name).parent / unquote(url.path)).resolve() if url.path else root / name
+        if not path.is_relative_to(root):
+            error(name, number, f'link escapes repository: {destination}')
+            return None
+        target = path.relative_to(root).as_posix()
+        if not path.exists() or (path.suffix == '.md' and target not in documents):
+            error(name, number, f'missing or uninspected target: {destination}')
+            return None
+        if url.fragment:
+            counts['anchor_links'] += 1
+            if target not in anchors or unquote(url.fragment) not in anchors[target]:
+                error(name, number, f'missing Markdown anchor: {destination}')
+        return target
+
+    for name, source in documents.items():
+        source = without_code(source)
+        for match in REF_DEF.finditer(source):
+            target_for(name, source.count('\n', 0, match.start()) + 1, match[2])
+        # Check all reference definitions (including shortcut targets). Undefined
+        # bracket sequences are plain text, e.g. bibliographic citations [R02][R03].
+        body = REF_DEF.sub(lambda m: ' ' * len(m[0]), source)
+        for match in INLINE_LINK.finditer(body):
+            target_for(name, body.count('\n', 0, match.start()) + 1, match[1])
+
+    for name, digest in FROZEN.items():
+        if name not in raw_files or hashlib.sha256(raw_files[name]).hexdigest() != digest:
+            error(name, 1, 'Frozen digest mismatch or missing file')
+        else:
+            counts['frozen_digests'] += 1
+
+    index = 'docs/standards/README.md'
+    index_text = documents.get(index, '')
+    for digest in FROZEN.values():
+        if digest not in index_text:
+            error(index, 1, 'missing Frozen digest in catalog')
+    for number, line in enumerate(index_text.splitlines(), 1):
+        if not line.startswith('|'):
+            continue
+        digests = re.findall(r'`([0-9a-f]{64})`', line)
+        links = list(INLINE_LINK.finditer(line))
+        if digests and links:
+            target = target_for(index, number, links[0][1])
+            if target not in raw_files or hashlib.sha256(raw_files[target]).hexdigest() not in digests:
+                error(index, number, 'catalog full-file digest mismatch')
+            else:
+                counts['catalog_digests'] += 1
+
+    profile = 'docs/engineering.md'
+    if 'agent-engineering-workflow' not in anchors.get(profile, set()):
+        error(profile, 1, 'missing legacy Agent workflow anchor')
+    redirect = documents.get(profile, '').split('## Agent Engineering Workflow\n', 1)
+    if len(redirect) != 2 or not re.search(r'\]\(agent-workflow\.md\)', redirect[1]):
+        error(profile, 1, 'legacy Agent workflow anchor must link to the unique body')
+
+    return {'scope': 'local documentation only; no semantic, adoption, CI or G2 decision',
+            'counts': counts, 'errors': errors}
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--root', type=Path, default=Path(__file__).resolve().parent.parent)
+    args = parser.parse_args()
+    try:
+        report = inspect(args.root.resolve())
+    except (OSError, UnicodeError, ValueError, subprocess.CalledProcessError) as exc:
+        print(f'Cannot inspect repository: {exc}', file=sys.stderr)
+        return 2
+    print(json.dumps(report, ensure_ascii=False, indent=2))
+    return 1 if report['errors'] else 0
+
+
+if __name__ == '__main__':
+    sys.exit(main())
