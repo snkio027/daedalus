@@ -12,6 +12,7 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 CHECK = ROOT / 'scripts/check-docs'
+WORKFLOW_VERSIONS = ('v1.0.1', 'v1.0', 'v1.1')
 
 
 class DocumentationChecks(unittest.TestCase):
@@ -21,7 +22,7 @@ class DocumentationChecks(unittest.TestCase):
         self.root = Path(self.temp.name)
         subprocess.run(['git', 'init', '--quiet', str(self.root)], check=True)
         rows = []
-        for version in ('v1.0', 'v1.1'):
+        for version in WORKFLOW_VERSIONS:
             name = f'docs/standards/git-github-workflow/{version}.md'
             target = self.root / name
             target.parent.mkdir(parents=True, exist_ok=True)
@@ -56,7 +57,7 @@ class DocumentationChecks(unittest.TestCase):
     def test_valid_untracked_documents_and_heading_collisions(self):
         self.put('new.md', '# 标题 `Example`\n\n## Repeat\n## Repeat\n## Repeat-1\n\n'
                  '[Unicode](#标题-example) [Repeat](#repeat-1) [Collision](#repeat-1-1)\n')
-        self.assertEqual(self.assert_good()['counts']['markdown'], 6)
+        self.assertEqual(self.assert_good()['counts']['markdown'], 7)
 
     def test_untracked_missing_target_fails(self):
         self.put('new.md', '# New\n\n[Missing](absent.md)\n')
@@ -145,7 +146,7 @@ class DocumentationChecks(unittest.TestCase):
     def test_frozen_change_rejected_even_with_updated_catalog(self):
         catalog = self.root / 'docs/standards/README.md'
         original_catalog = catalog.read_text()
-        for version in ('v1.0', 'v1.1'):
+        for version in WORKFLOW_VERSIONS:
             with self.subTest(version=version):
                 path = self.root / f'docs/standards/git-github-workflow/{version}.md'
                 original = path.read_bytes()
@@ -160,7 +161,7 @@ class DocumentationChecks(unittest.TestCase):
                     catalog.write_text(original_catalog)
 
     def test_missing_frozen_fails(self):
-        for version in ('v1.0', 'v1.1'):
+        for version in WORKFLOW_VERSIONS:
             with self.subTest(version=version):
                 path = self.root / f'docs/standards/git-github-workflow/{version}.md'
                 original = path.read_bytes()
