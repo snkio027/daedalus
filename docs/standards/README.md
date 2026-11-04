@@ -6,8 +6,8 @@
 
 | 内容 | 类型与适用范围 | 内容状态 | 项目采用 | 运行验证 |
 | --- | --- | --- | --- | --- |
-| [Git/GitHub v1.1](git-github-workflow/v1.1.md) | 仓库交付规范；使用 Git/GitHub 的项目 | Frozen | Daedalus 于 2026-10-24 采用；其他项目分别决定 | 线上门禁、覆盖去重及提速收益待消费仓库验收 |
-| [Git/GitHub v1.0](git-github-workflow/v1.0.md) | 历史规范；追溯已有采用记录 | 历史 Frozen | Daedalus 已由 v1.1 替代；不改写其他项目历史 | 本目录不新增运行验证结论 |
+| [GGWF v1.0（2026 重编版）](git-github-workflow/v1.0.md) | Git 与 GitHub 协作工程规范；多人及 Code Agent 的仓库交付 | Frozen | Daedalus 于 2026-11-04 采用，替代历史 v1.1；其他项目分别决定 | 线上门禁、协作控制及效率收益待消费仓库验收 |
+| [Git/GitHub 历史 v1.1](git-github-workflow/v1.1.md) | 历史规范；追溯固定采用与既有试点 | 历史 Frozen | Daedalus 当前文档规范已替代；其他项目与试点的固定绑定保持不变 | 本目录不新增运行验证结论 |
 | [供应链安全指南 r2](software-supply-chain-security/2026-edition-draft.md) | 专题指南；有构建、制品与部署需求的项目 | Proposed | 须按交付对象评审采用范围 | 控制未部署，运行验收未完成 |
 | [Agent 工作流](../agent-workflow.md) | 操作方法；任务执行、交接与恢复 | Proposed，尚非固定共享发行版 | 不自动成为本仓库或消费者的已采用要求 | 待真实任务验证 |
 | [需求、设计与验证衔接方法](requirements-design-verification/v0.1-draft.md) | 方法适配；从问题到能力、设计与检查集合 | `v0.1-draft` r1，Proposed | 参考固定 KB 草案，不表示整体采用外部套系 | 待首个真实任务校准 |
@@ -23,10 +23,10 @@
 | 完整交付与价值 | 已接受的[产品契约](../product.md)：四维质量、三循环与能力增量 | 真实问题、取舍、可用成果与用户反馈 |
 | 需求与能力定义 | [衔接方法 §2](requirements-design-verification/v0.1-draft.md#2-从问题到能力契约)，Proposed；任务字段见 Agent 工作流 | 从真实诉求得到可否证的接受条件，验证交接者可理解 |
 | 系统设计与决定 | 已接受的 [Architecture v0](../architecture.md)；消费设计用[衔接方法 §3](requirements-design-verification/v0.1-draft.md#3-从约束到设计与决定)，Proposed | 固定场景的边界、替代方案、机制和失效依据 |
-| 实现与维护性 | v1.1 的语义审查；Agent 候选的执行方法 | 首个实现的接口、错误、所有权、依赖和语言约束 |
-| Agent 执行、权限与恢复 | [Agent 工作流](../agent-workflow.md)，Proposed；架构中的权威与未知副作用原则 | 实际版本、加载、隔离、停止、接手与外部效果核验 |
+| 实现与维护性 | GGWF v1.0 的语义审查；Agent 候选的执行方法 | 首个实现的接口、错误、所有权、依赖和语言约束 |
+| Agent 执行、权限与恢复 | GGWF v1.0 的责任、隔离与恢复要求；[Agent 工作流](../agent-workflow.md)，Proposed；架构中的权威与未知副作用原则 | 实际版本、加载、隔离、停止、接手与外部效果核验 |
 | 项目采用与上下文 | 本目录固定来源与采用要求；[G2 准备方案](../plans/consumer-adoption-g2.md)，Proposed | 一个消费者实际走通取得、使用、升级和退出，之后才形成独立采用手册 |
-| 验证与测试 | 已采用 v1.1 的入口和准入；[衔接方法 §4](requirements-design-verification/v0.1-draft.md#4-从接受条件到检查集合)，Proposed | 业务判据、失败辨别力、组合与平台覆盖；文档检查工具只覆盖本地维护 |
+| 验证与测试 | GGWF v1.0 的入口和准入；[衔接方法 §4](requirements-design-verification/v0.1-draft.md#4-从接受条件到检查集合)，Proposed，仍按历史 v1.1 映射 | 业务判据、失败辨别力、组合与平台覆盖；文档检查工具只覆盖本地维护 |
 | 发布与供应链 | [供应链指南 r2](software-supply-chain-security/2026-edition-draft.md)，Proposed | 真实制品的构建、来源、安装、升级、受控发布与恢复 |
 | 运行与维护 | 架构的观测、诊断、恢复和反馈责任 | 有运行组件后按 CLI／库／管道／服务形成操作手册与演练 |
 | 效果评估 | 产品及 Agent 候选的时间、人工、返工与成本口径 | 实际采集来源、样本、失败记录、比较与改进决定 |
@@ -48,14 +48,16 @@
 
 ## 版本与候选来源记录
 
-| 文档 | Daedalus 采用关系 | 原始字节 SHA-256 |
+| 文档 | Daedalus 采用关系 | 完整文件 SHA-256 |
 | --- | --- | --- |
-| [Git & GitHub Engineering Workflow v1.1](git-github-workflow/v1.1.md) | Daedalus 于 2026-10-24 采用，替代 v1.0；线上实施与收益待验收 | `de77bfd55da3811ed553985db8d61938467a2a3b2c0215e225b607428b667a86` |
-| [Git & GitHub Engineering Workflow v1.0](git-github-workflow/v1.0.md) | 历史归档，Daedalus 已以 v1.1 替代；保留原文及其历史元数据 | `ae53bb825f902e4814fb88840e1069966913cba9b37cad77c179258b391f773f` |
+| [Git 与 GitHub 协作工程规范 GGWF v1.0（2026 重编版）](git-github-workflow/v1.0.md) | 依据维护者于 2026-11-04 的评审、改写及发布要求，作为当前文档规范替代历史 v1.1 | `d3cc43845b5009166f8da7224be0d7223ace04b0df4b1dbd32634a80d1f5ff17` |
+| [Git & GitHub Engineering Workflow 历史 v1.1](git-github-workflow/v1.1.md) | 2026-10-24 采用的历史基线；保留原始字节及采用元数据，供已有绑定追溯 | `de77bfd55da3811ed553985db8d61938467a2a3b2c0215e225b607428b667a86` |
 
-上述 Git/GitHub 两个版本均按原始字节迁入。历史版本用于追溯既有决定，不因文件内保留原始 Stable 状态就重新成为现行规范。
+GGWF v1.0（2026 重编版）是基于历史 v1.1 的重新编纂，不是旧 v1.0 的原字节归档。维护者明确允许删除原 v1.0，因此本次有意重新使用 `v1.0.md` 路径；后续仍按 Frozen 版本规则演进，不能把本次例外推广为静默覆盖已采用版本。
 
-待评审专题：[云原生软件供应链安全工程指南](software-supply-chain-security/2026-edition-draft.md)，`2026-edition-draft` r2，**Proposed**。由 `uv-demo` 的原有指南整理，来源提交与原始摘要见正文；本版经过修订，不是原始字节归档。它补充构建、制品、来源证明和部署准入，不替代已采用的 Git/GitHub v1.1，也不代表实际控制已部署或通过运行验收。
+[原 v1.0](https://github.com/snkio027/daedalus/blob/f06cb76ff2d216f31f90f4e9a27f6af732104d37/docs/standards/git-github-workflow/v1.0.md) 保留于 Git 历史：提交 `f06cb76ff2d216f31f90f4e9a27f6af732104d37`，路径 `docs/standards/git-github-workflow/v1.0.md`，SHA-256 `ae53bb825f902e4814fb88840e1069966913cba9b37cad77c179258b391f773f`。同一提交也包含历史 v1.1。既有固定对象保持有效，当前推荐与采用关系以上表为准，不能仅凭版本号大小或文件名判断新旧。
+
+待评审专题：[云原生软件供应链安全工程指南](software-supply-chain-security/2026-edition-draft.md)，`2026-edition-draft` r2，**Proposed**。由 `uv-demo` 的原有指南整理，来源提交与原始摘要见正文；本版经过修订，不是原始字节归档。它补充构建、制品、来源证明和部署准入，不替代消费项目采用的仓库交付规范，也不代表实际控制已部署或通过运行验收。
 
 待评审专题：[AI-Native 数据建模与平台组织架构](ai-native-data-modeling/v1.0-draft.md)，`v1.0-draft` r2，**Proposed**。由维护者提供的 `AN-DM-ARCH-001` v1.0 原文整合，保留 14 章、3 个附录与来源记录，补充现有契约适配和恢复边界。原文 SHA-256 为 `b1d122b91f1228686ff681424b882f7d83fc52ca40221024ef2e0756d97f211f`；整合版摘要如下，两者不可混用。
 
@@ -63,13 +65,15 @@
 | --- | --- |
 | [数据建模 v1.0-draft r2](ai-native-data-modeling/v1.0-draft.md) | `46f47808bfb48c57727cb27c2a2ba50112be2046d2a5729de8d136c6230e9396` |
 
-数据专题服务消费项目的数据产品设计，不预先选择 Daedalus 的实现技术；其数据 Gate 与 M0–M3 不构成 G2 放行。收录、设计评审、项目采用和实际验收分别记录，未运行项保持 NOT RUN；它不改变 Git/GitHub v1.1 的已采用状态，也不将 Agent 工作流或供应链指南提升为已采用规范。
+数据专题服务消费项目的数据产品设计，不预先选择 Daedalus 的实现技术；其数据 Gate 与 M0–M3 不构成 G2 放行。收录、设计评审、项目采用和实际验收分别记录，未运行项保持 NOT RUN；它不改变仓库交付规范的采用关系，也不将 Agent 工作流或供应链指南提升为已采用规范。
+
+供应链 r2、数据建模 r2 和需求设计衔接 r1 的正文与全文摘要保持不变，其中 Git/GitHub 条款仍按历史 v1.1 解释；本次发布不自动完成这些候选的引用迁移。Agent 方法候选与消费接入方案中的既有试点同样保持原固定来源。将这些对象迁移到 GGWF v1.0 时，须另行核对条款映射、适用性、修订身份与消费者决定。
 
 消费项目须记录本仓库地址、包含目标文档的完整 Git 提交 SHA、文档相对路径、文件摘要，以及自身采用范围和例外；执行环境实际读取并校验该对象。不能只跟随 main 或最新版本。集中维护文档不自动迁移消费项目，也不授予 CI、Ruleset、合并或发布权限。
 
-已采用的 Frozen 版本不原地改写技术内容；后续修订另立版本，经评审和明确采用后更新索引。新增公共说明按实际复用需求归档；项目专用配置与运行证据保留在相应项目或任务，不集中复制。
+除上述维护者明确授权的 2026 重编及重新编号外，已采用的 Frozen 版本不原地改写技术内容；后续修订另立版本，经评审和明确采用后更新索引。新增公共说明按实际复用需求归档；项目专用配置与运行证据保留在相应项目或任务，不集中复制。
 
-跨 Agent 工作方法的唯一完整正文为 [Agent Engineering Workflow](../agent-workflow.md)，继续保持 Proposed。2026-10-26 的候选拆分只是编排调整；经真实任务验证、确认复用需求后再评审发布固定版本。引用该方法不改写 v1.1，也不产生执行授权。
+跨 Agent 任务执行方法的候选正文为 [Agent Engineering Workflow](../agent-workflow.md)，继续保持 Proposed，沿用其历史 v1.1 绑定。2026-10-26 的候选拆分只是编排调整；经真实任务验证、确认复用需求后再评审发布固定版本。GGWF v1.0 规定仓库协作中的责任、隔离和准入边界，不因此将该候选方法整体采用，也不产生执行授权。
 
 下列候选的全文摘要与各正文记录的外部来源摘要分别使用：
 
@@ -109,13 +113,13 @@ Profile 的出现不会赋予权限，也不等于已部署 Ruleset。Adapter �
 5. 实际审查与 Ruleset 配置、策略文件范围、合并方式，以及自动化身份的权限。
 6. 能力验收所需的集成版本、制品或部署对象、使用路径与验收责任。
 
-v1.1 §25 的接口分为 Fast、Plan、Affected、Full 与 Extended；`quality:fast`、`quality:plan`、`quality:full` 等名称是接口示例，不要求引入特定任务工具。PR-full 使用 Plan → Full，不要求实现未使用的 Affected 入口；Queue 按计划执行 Affected，必要时升级为一次 Full。兼容入口 `task quality` 应保持 Full 语义，已有 `quality:heavy` 迁移前核对覆盖。已有仓库可以暴露自己的权威入口；适配或例外在 Instance 中记录，不能默默宣称完全一致。
+GGWF v1.0 §6 的接口分为 Fast、Plan、Affected、Full 与 Extended；`quality:fast`、`quality:plan`、`quality:full` 等名称是接口示例，不要求引入特定任务工具。PR-full 使用 Plan → Full，不要求实现未使用的 Affected 入口；Queue 按计划执行 Affected，必要时升级为一次 Full。兼容入口 `task quality` 应保持 Full 语义，已有 `quality:heavy` 迁移前核对覆盖。已有仓库可以暴露自己的权威入口；适配或例外在 Instance 中记录，不能默默宣称完全一致。
 
 接入结果需要区分“文档要求”“平台实际配置”“当前运行事实”。仅检测到 CI 文件或本地检查成功，不能证明远端保护规则已启用。平台能力、检查名称、事件和权限需在实施接入时依据实际仓库核验。
 
 ## 维护、勘误与版本演进
 
-以下是本轮新增的 **Proposed 维护办法**，供评审；现有 Frozen 原文不变、固定来源和消费者显式采用要求继续有效。新方法或维护办法合入仓库不自动成为消费项目的已采用契约。
+以下是 2026-10-26 提出的 **Proposed 维护办法**，供评审；Frozen 原文保留原则、固定来源和消费者显式采用要求继续有效，本次重新编号例外已在上文单独记录。新方法或维护办法合入仓库不自动成为消费项目的已采用契约。
 
 Daedalus 项目维护者负责目录、来源身份与内容变更评审；每个内容 PR 指明维护责任、受影响条款和依据。外部源作者维护原文，Daedalus 只维护固定引用与适配；消费项目维护者决定本项目是否采用、迁移及验证。角色改变或委托需能定位依据，不因代写文档取得批准权。
 

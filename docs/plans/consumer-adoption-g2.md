@@ -34,6 +34,8 @@ flowchart TD
 
 当前消费目录入口见[共享内容目录](../standards/README.md#消费项目怎样采用)。本方案保留准备快照与实验选项，不另行发布已验证的接入手册。下表的历史提交、路径和摘要保持原身份；当前 Agent 候选已独立到 [agent-workflow.md](../agent-workflow.md)，不将新路径静默套用到旧提交。
 
+2026-11-04 版本说明：Daedalus 当前文档规范已采用 [GGWF v1.0（2026 重编版）](../standards/git-github-workflow/v1.0.md)。本方案的准备快照和既有试点继续绑定下表中的历史 v1.1；新版发布不迁移消费者、不改变已准备的比较基线，也不启动 G2。若选择新版作为新消费任务的输入，须另外记录完整提交、路径、摘要、差异、采用决定与接入验证。
+
 ## 2. 第一条消费路径
 
 首轮建议采用**项目入口＋固定规范副本＋现有工程入口＋一份任务记录**。无需先建设 CLI、MCP、数据库、插件或常驻协调器。
@@ -49,7 +51,7 @@ flowchart TD
 
 | 对象 | 可固定的来源与状态 | 首轮处理 |
 | --- | --- | --- |
-| Git/GitHub v1.1 | `snkio027/daedalus@f06cb76ff2d216f31f90f4e9a27f6af732104d37`，`docs/standards/git-github-workflow/v1.1.md`；SHA-256 `de77bfd55da3811ed553985db8d61938467a2a3b2c0215e225b607428b667a86`；Daedalus 已采用 | 消费者另行评审自身 Instance；PR-full / Queue 与 standard / assured 分别选择，不因引用而改变实际保护 |
+| Git/GitHub 历史 v1.1 | `snkio027/daedalus@f06cb76ff2d216f31f90f4e9a27f6af732104d37`，`docs/standards/git-github-workflow/v1.1.md`；SHA-256 `de77bfd55da3811ed553985db8d61938467a2a3b2c0215e225b607428b667a86`；2026-10-26 准备快照中的采用基线，既有试点保持该绑定 | 消费者另行评审自身 Instance；PR-full / Queue 与 standard / assured 分别选择，不因本仓库新版发布改变实际保护 |
 | Agent Engineering Workflow | `5e3c2a6c69d9bae31463ea2ee28fb61aea8e0e34` 中 `docs/engineering.md#agent-engineering-workflow`；完整文件 SHA-256 `1a5efb15f2beb05a8bc4945af460034afa99ea19da22c01b1f653fda64955d39` | Proposed，仅将选定方法作为试验输入；完整文件校验与章节适用范围分开，Daedalus 自身 Profile 不随之继承 |
 | 供应链指南 r2 | 同一 `5e3c2a6` 提交中的 `docs/standards/software-supply-chain-security/2026-edition-draft.md`；摘要见[工程规范索引](../standards/README.md)及来源记录 | Proposed，按真实制品、发布和信任需求选择；不把全部云平台控制强加给首轮 |
 | 数据建模指南 | [PR #7](https://github.com/snkio027/daedalus/pull/7) 的候选 | 待评审，不作为本方案的依赖，也不继承为已采用规则 |
