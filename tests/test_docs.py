@@ -143,18 +143,32 @@ class DocumentationChecks(unittest.TestCase):
         self.assert_bad('document escapes repository')
 
     def test_frozen_change_rejected_even_with_updated_catalog(self):
-        name = 'docs/standards/git-github-workflow/v1.1.md'
-        path = self.root / name
-        old = hashlib.sha256(path.read_bytes()).hexdigest()
-        path.write_bytes(path.read_bytes() + b'\n')
-        new = hashlib.sha256(path.read_bytes()).hexdigest()
         catalog = self.root / 'docs/standards/README.md'
-        catalog.write_text(catalog.read_text().replace(old, new))
-        self.assert_bad('Frozen digest mismatch')
+        original_catalog = catalog.read_text()
+        for version in ('v1.0', 'v1.1'):
+            with self.subTest(version=version):
+                path = self.root / f'docs/standards/git-github-workflow/{version}.md'
+                original = path.read_bytes()
+                old = hashlib.sha256(original).hexdigest()
+                path.write_bytes(original + b'\n')
+                new = hashlib.sha256(path.read_bytes()).hexdigest()
+                catalog.write_text(original_catalog.replace(old, new))
+                try:
+                    self.assert_bad('Frozen digest mismatch')
+                finally:
+                    path.write_bytes(original)
+                    catalog.write_text(original_catalog)
 
     def test_missing_frozen_fails(self):
-        (self.root / 'docs/standards/git-github-workflow/v1.0.md').unlink()
-        self.assert_bad('Frozen digest mismatch or missing file')
+        for version in ('v1.0', 'v1.1'):
+            with self.subTest(version=version):
+                path = self.root / f'docs/standards/git-github-workflow/{version}.md'
+                original = path.read_bytes()
+                path.unlink()
+                try:
+                    self.assert_bad('Frozen digest mismatch or missing file')
+                finally:
+                    path.write_bytes(original)
 
     def test_candidate_digest_is_checked(self):
         catalog = self.root / 'docs/standards/README.md'

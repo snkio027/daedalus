@@ -4,7 +4,9 @@
 
 迁移记录：2026-10-26 从 `5e3c2a6c69d9bae31463ea2ee28fb61aea8e0e34` 的 `docs/engineering.md#agent-engineering-workflow` 独立成文；原完整文件 SHA-256 为 `1a5efb15f2beb05a8bc4945af460034afa99ea19da22c01b1f653fda64955d39`。本次只调整编排、指代和 Daedalus 检查入口，任务、授权、证据与恢复规则不变。原锚点保留短导航；本文是唯一完整正文。物理拆分不构成固定共享版本发布、默认采用或运行验收；须经真实任务验证并确认复用需求后，再评审发布固定方法版本。
 
-能力的定义沿用 [product.md](product.md)；身份、权限、证据与恢复沿用 [architecture.md](architecture.md) §4–8、§13。仓库交付继续引用已采用的 [Git/GitHub v1.1](standards/git-github-workflow/v1.1.md)，来源固定为 `snkio027/daedalus@f06cb76ff2d216f31f90f4e9a27f6af732104d37` 中的该路径及[Daedalus 基线身份记录](engineering.md#共享规范基线身份)中的摘要。其他项目须显式选择适用范围，不能把本文的 Proposed 状态传播给已采用的 v1.1，也不能从文档引用推定已部署控制。
+能力的定义沿用 [product.md](product.md)；身份、权限、证据与恢复沿用 [architecture.md](architecture.md) §4–8、§13。本候选的仓库交付条款继续绑定 [历史 Git/GitHub v1.1](standards/git-github-workflow/v1.1.md)，来源为 `snkio027/daedalus@f06cb76ff2d216f31f90f4e9a27f6af732104d37` 中的 `docs/standards/git-github-workflow/v1.1.md`，SHA-256 为 `de77bfd55da3811ed553985db8d61938467a2a3b2c0215e225b607428b667a86`。其他项目须显式选择适用范围，不能把本文的 Proposed 状态传播给已采用的规范，也不能从文档引用推定已部署控制。
+
+2026-11-04 版本说明：Daedalus 当前文档规范已改为 [GGWF v1.0（2026 重编版）](standards/git-github-workflow/v1.0.md)，采用关系见[工程约定](engineering.md#共享规范基线身份)。本文以下 v1.1 条款及既有消费试点仍解释上述固定对象，不因新版发布自动迁移；本候选继续保持 Proposed，也不覆盖消费项目当前已接受的契约。
 
 ## 工作模式与任务契约
 

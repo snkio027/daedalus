@@ -15,7 +15,7 @@ from urllib.parse import unquote, urlsplit
 
 FROZEN = {
     'docs/standards/git-github-workflow/v1.0.md':
-        'ae53bb825f902e4814fb88840e1069966913cba9b37cad77c179258b391f773f',
+        'd3cc43845b5009166f8da7224be0d7223ace04b0df4b1dbd32634a80d1f5ff17',
     'docs/standards/git-github-workflow/v1.1.md':
         'de77bfd55da3811ed553985db8d61938467a2a3b2c0215e225b607428b667a86',
 }
